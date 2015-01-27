@@ -3,23 +3,17 @@
 /////////////////////////////
 function dataObj() {
   this.inputData = {};
-  this.filteredData = {};
   this.pathData = [];
 };
 
 dataObj.prototype.updateData = function(data, state) {
-  this.inputData = data;
-  self = this;
+  city = state.getCity();
+  if(this.inputData[city] == undefined){
+    this.inputData[city] = data;
+  }
 
-  for (var i = 0; i < 24; i++) {
-    this.pathData[i] = [];
-  };
-  this.filteredData = this.inputData
-                          .filter(function(d,i) {
-                              if (d.city == state.getCity()) {
-                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
-                                return d;
-                          }});
+  this.updateState(state)
+
 }
 
 dataObj.prototype.updateState = function(state) {
@@ -29,22 +23,20 @@ dataObj.prototype.updateState = function(state) {
     this.pathData[i] = [];
   };
 
-  this.filteredData = this.inputData
-                          .filter(function(d,i) {
-                              if (d.city == state.getCity()) {
-                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
-                                return d;
-                          }});
+  this.inputData[state.getCity()].forEach(function(d,i){
+    self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
+  })
+
 }
 
 dataObj.prototype.getInputData = function(){
   return this.inputData;
 }
 
-dataObj.prototype.getPathData = function(){
-  return this.pathData;
+dataObj.prototype.getInputDataCity = function(city){
+  return this.inputData[city];
 }
 
-dataObj.prototype.getFilteredData = function(){
-  return this.filteredData;
+dataObj.prototype.getPathData = function(){
+  return this.pathData;
 }

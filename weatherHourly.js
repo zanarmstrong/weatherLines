@@ -41,7 +41,6 @@ var viz = new view();
 // when metric changes, update data and view
 d3.select('#metric')
   .on("change", function() {
-    console.log(this.value)
     cState.setMetric(this.value);
     updateDataAndView();
   })
@@ -55,8 +54,8 @@ d3.csv(dataFile, function(error, inputData) {
   // transform data to useable format (better way to do this?)
   data.updateData(inputData, cState);
 
-  // draw lines 
-  viz.setView(cState, data.getPathData(), data.getFilteredData());
+  // draw lines
+  viz.setView(cState, data.getPathData(), data.getInputDataCity(cState.getCity()));
   setUpMap();
 
 });
@@ -69,8 +68,8 @@ function updateCity(city) {
     d3.csv(dataFile, function(error, inputData) {
       if (error) return console.error(error);
       // still can consolodate this
-      data.updateData(inputData, cState);
       updateCities(city);
+      data.updateData(inputData, cState);
       updateDataAndView();
     }
     )
@@ -79,5 +78,5 @@ function updateCity(city) {
 // update data and view
 function updateDataAndView() {
   data.updateState(cState);
-  viz.updateView(cState, data.getPathData(), data.getFilteredData());
+  viz.updateView(cState, data.getPathData(), data.getInputDataCity(cState.getCity()));
 }

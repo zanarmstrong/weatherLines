@@ -24,7 +24,6 @@ view.prototype.setView = function(state, data, filteredData) {
               			return state.getScales().y(d[state.getMetric()] / 10);
             		})
             		.clipExtent([[0, 0],[state.dimensions.width, state.dimensions.height]]);
-
   this.drawVoronoi(this.voronoi(filteredData), state);
 }
 
@@ -290,7 +289,7 @@ view.prototype.setCrosshairs = function(xpos, ypos, d) {
   d3.select(".yLine").attr("transform", "translate(" + (xpos) + ",0)").attr("y1", ypos);
 
   // show text for crosshairs
-  d3.select(".crosshairs").select('.xText').text(d[cState.getMetric()] + cState.getYText()).attr("y", ypos - 10);
+  d3.select(".crosshairs").select('.xText').text((d[cState.getMetric()]/10) + cState.getYText()).attr("y", ypos - 10);
   d3.select(".crosshairs").select('.zText').text(formatHours(d.hour)).attr("y", ypos - 10).attr("x", xpos + 8);
   d3.select(".crosshairs").select('.yText').text(moment(d.day).format("MMM DD")).attr("x", xpos + 8);
 }
