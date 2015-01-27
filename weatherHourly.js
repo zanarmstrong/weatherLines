@@ -20,7 +20,7 @@ var legendRectHeight = 13,
 // initialize state
 var cState = new state('SAN FRANCISCO', 
                        "cloudCover", 
-                       {normalTemperature: [-5,105], heatIndex: [-5,105], windChill: [-5,105], cloudCover: [0,100], aveWindSpeed: [0,25]},
+                       {normalTemperature: [-10,105], heatIndex: [-10,105], windChill: [-10,105], cloudCover: [0,100], aveWindSpeed: [0,25]},
                        {width: width, height: height},
                        legendRectHeight);
 var dataFile = 'dataMunging/' + cState.getCity() + '.csv';
@@ -55,7 +55,7 @@ d3.csv(dataFile, function(error, inputData) {
   data.updateData(inputData, cState);
 
   // draw lines
-  viz.setView(cState, data.getPathData(), data.getInputDataCity(cState.getCity()));
+  viz.setView(cState, data.getPathData(cState.getCity(), cState.getMetric()), data.getInputDataCity(cState.getCity()));
   setUpMap();
 
 });
@@ -78,5 +78,5 @@ function updateCity(city) {
 // update data and view
 function updateDataAndView() {
   data.updateState(cState);
-  viz.updateView(cState, data.getPathData(), data.getInputDataCity(cState.getCity()));
+  viz.updateView(cState, data.getPathData(cState.getCity(), cState.getMetric()), data.getInputDataCity(cState.getCity()));
 }
