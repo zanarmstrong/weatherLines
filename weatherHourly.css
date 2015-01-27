@@ -13,7 +13,7 @@ p {
 }
 
 .hourlyLines {
-	stroke-width: 1;
+	stroke-width: 1.1;
 	fill: none;
 }
 
@@ -31,6 +31,12 @@ p {
 	fill: none;
 	stroke: white;
 	shape-rendering: crispEdges;
+}
+
+.axis text {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility:    hidden;
+	-ms-backface-visibility:     hidden;
 }
 
 .legend text {
@@ -98,6 +104,10 @@ p {
 	fill: rgba(255, 255, 255, 1);
 }
 
+.clock {
+	-webkit-backface-visibility: hidden;
+	-webkit-transform-style: preserve-3d;
+}
 
 .crosshairs {
 	stroke: white;

@@ -94,14 +94,13 @@ view.prototype.drawVoronoi = function(data, state) {
 	function vMouseover(d) {
   		var xpos = state.getScales().xTime(moment(d.day));
   		var ypos = state.getScales().y(d[state.getMetric()] / 10)
-  		var dot = svg.select(".dot")
-    		.classed('hidden', false);
+  		var dot = svg.select(".dot").classed('hidden', false);
 
   		dot.attr("transform", "translate(" + (xpos - 2) + "," + (ypos) + ")");
 
 		viz.setCrosshairs(xpos, ypos, d);
-  		cState.showCrosshairs(true);
-  		self.activateClock(d.hour);
+  		  state.showCrosshairs(true);
+  	    self.activateClock(d.hour);
 	}
 
 	function vMouseout(d) {
@@ -284,9 +283,10 @@ view.prototype.setUpCrosshairs = function() {
 view.prototype.setCrosshairs = function(xpos, ypos, d) {
   // move crosshairs
   d3.select(".xLine")
-    .attr("transform", "translate(0," + (ypos) + ")")
+    .attr("y2", ypos)
+    .attr("y1", ypos)
     .attr("x2", xpos)
-  d3.select(".yLine").attr("transform", "translate(" + (xpos) + ",0)").attr("y1", ypos);
+  d3.select(".yLine").attr("x1", xpos).attr("x2", xpos).attr("y1", ypos);
 
   // show text for crosshairs
   d3.select(".crosshairs").select('.xText').text((d[cState.getMetric()]/10) + cState.getYText()).attr("y", ypos - 10);
@@ -347,8 +347,12 @@ view.prototype.drawLegend = function(state) {
 view.prototype.drawClock = function() {
 
   var hour = 0;
-  var rotate = 360 / 12 * hour;
   var clock = svg.append("g").attr("class", "clock");
+
+
+  var rotateAngle = 2 * Math.PI / 12 * hour;
+  var rotate = {x: 30 * Math.sin(rotateAngle),
+              y: -30 * Math.cos(rotateAngle)}
 
   clock.append("circle")
     .attr("stroke", "grey")
@@ -369,10 +373,9 @@ view.prototype.drawClock = function() {
     .attr("stroke", "grey")
     .attr("stroke-width", 2)
     .attr("x1", clockPosition.x)
-    .attr("x2", clockPosition.x)
+    .attr("x2", clockPosition.x + rotate.x)
     .attr("y1", clockPosition.y)
-    .attr("y2", clockPosition.y - 30)
-    .attr("transform", "rotate(" + rotate + " ," + clockPosition.x + "," + clockPosition.y + ")");
+    .attr("y2", clockPosition.y + rotate.y);
 
   clock.append('text').attr("class", "am partOfDay")
     .attr("fill", "grey")
@@ -410,6 +413,11 @@ view.prototype.drawClock = function() {
 }
 
 view.prototype.activateClock = function(hour) {
+
+  var rotateAngle = 2 * Math.PI / 12 * hour;
+  var rotate = {x: 30 * Math.sin(rotateAngle),
+              y: -30 * Math.cos(rotateAngle)}
+
   var partOfDay = 'am'
   if (hour > 11) {
     hour = hour - 12;
@@ -419,10 +427,12 @@ view.prototype.activateClock = function(hour) {
   d3.select("." + partOfDay).attr("fill", "white");
 
   // line
-  var rotate = 360 / 12 * hour;
+
   d3.select(".clock")
     .select("line")
-    .attr("transform", "rotate(" + rotate + " ," + clockPosition.x + "," + clockPosition.y + ")").attr("stroke", "white");
+    .attr("stroke", "white")
+    .attr("y2", clockPosition.y + rotate.y)
+    .attr("x2", clockPosition.x + rotate.x)
 
   // time in text
   d3.selectAll(".clockHour").data(clockHours)
@@ -433,6 +443,7 @@ view.prototype.activateClock = function(hour) {
         return "grey"
       }
     });
+
 }
 
 view.prototype.resetClock = function() {
