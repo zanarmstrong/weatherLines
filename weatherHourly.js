@@ -23,6 +23,20 @@ var cState = new state('SAN FRANCISCO',
                        {normalTemperature: [-10,105], heatIndex: [-10,105], windChill: [-10,105], cloudCover: [0,100], aveWindSpeed: [0,25]},
                        {width: width, height: height},
                        legendRectHeight);
+
+
+if(window.location.hash.split("&").length != 0){
+  var windowState = window.location.hash.split("&");
+  for(var i = 0; i < windowState.length; i++){
+    var k = windowState[i].replace('#','').split('=');
+    if(k[0] == "city"){
+      cState.setCity(k[1]);
+    } else if (k[0] == "metric"){
+      cState.setMetric(k[1]);
+    } 
+  }
+}
+
 var dataFile = 'dataMunging/' + cState.getCity() + '.csv';
 // initialize data
 var data = new dataObj();
@@ -53,6 +67,7 @@ d3.csv(dataFile, function(error, inputData) {
 
   // transform data to useable format (better way to do this?)
   data.updateData(inputData, cState);
+  cState.updateHash();
 
   // draw lines
   viz.setView(cState, data.getPathData(cState.getCity(), cState.getMetric()), data.getInputDataCity(cState.getCity()));
@@ -64,7 +79,7 @@ d3.csv(dataFile, function(error, inputData) {
 // update selected city
 function updateCity(city) {
     cState.setCity(city);
-    dataFile = 'dataMunging/' + cState.getCity() + '.csv'
+    dataFile = 'dataMunging/' + city + '.csv';
     d3.csv(dataFile, function(error, inputData) {
       if (error) return console.error(error);
       // still can consolodate this

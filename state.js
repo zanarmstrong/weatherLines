@@ -1,5 +1,7 @@
 "use strict";
 
+var metrics = ["cloudCover", "normalTemperature", "heatIndex", "windChill", "aveWindSpeed"]
+
 function state(city, metric, yDomain, dimensions, legendRectHeight) {
 	this.city = city;
 	this.metric = metric;
@@ -20,8 +22,14 @@ function state(city, metric, yDomain, dimensions, legendRectHeight) {
 	};
 };
 
+
+state.prototype.updateHash = function() {
+	window.location.hash = "city=" + this.city + "&metric=" + this.metric;
+}
+
 state.prototype.setCity = function(city) {
 	this.city = city;
+	this.updateHash();
 };
 
 state.prototype.getCity = function() {
@@ -31,6 +39,8 @@ state.prototype.getCity = function() {
 state.prototype.setMetric = function(metric) {
 	this.metric = metric;
 	this.scales.y.domain(this.yDomain[this.metric]);
+	this.updateHash();
+	document.getElementById("metric").selectedIndex = metrics.indexOf(metric);
 };
 
 state.prototype.getMetric = function() {
