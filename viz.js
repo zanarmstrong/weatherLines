@@ -156,12 +156,9 @@ view.prototype.updateTitle = function(state) {
 }
 // ----- AXIS --------
 view.prototype.drawAxis = function(state) {
-  function momentformat(k) {
-    return moment().dayOfYear(k).format("MMM")
-  }
 
   var xAxis = d3.svg.axis()
-    .tickFormat(momentformat)
+    .tickFormat(dayToMonth)
     .tickValues([0, 31, 59, 90, 120, 151, 181, 212, 243, 273,304,334])
     .scale(state.getScales().xTime)
     .orient('bottom');
