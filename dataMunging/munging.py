@@ -1,6 +1,8 @@
 ''' original header: STATION,STATION_NAME,DATE,HLY-CLOD-PCTOVC,HLY-HIDX-NORMAL,HLY-TEMP-NORMAL,HLY-WCHL-NORMAL,HLY-WIND-AVGSPD
 '''
 import csv
+import time
+import datetime
 
 cityNicknames = {'JACKSONVILLE INTERNATIONAL AIRPORT FL US': 'JACKSONVILLE',
 'INDIANAPOLIS INTERNATIONAL AIRPORT IN US': 'INDIANAPOLIS',
@@ -43,13 +45,12 @@ def readList(filename):
     myarray = []
     with open(filename, encoding='utf-8') as a_file:
         for a_line in a_file:
-        	a_line = a_line.rstrip("\n").split(",")[1:8]
-        	a_line[0] = cityNicknames[a_line[0]]
-        	
-        	a_line.append(int(a_line[1].split(" ")[1].split(":")[0]))
-        	k = a_line[1].split(" ")[0]
-        	a_line[1] = k[0:4] + "-" +  k[4:6] + "-" + k[6:8]
-        	myarray.append(a_line)
+            a_line = a_line.rstrip("\n").split(",")[1:8]
+            a_line[0] = cityNicknames[a_line[0]]
+            a_line.append(int(a_line[1].split(" ")[1].split(":")[0]))
+            k = a_line[1].split(" ")[0]
+            a_line[1] = int(datetime.date(int(k[0:4]),int(k[4:6]),int(k[6:8])).strftime("%j"))
+            myarray.append(a_line)
 
     for city in cityNicknames:
     	print(city)

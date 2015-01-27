@@ -24,8 +24,7 @@ dataObj.prototype.updateState = function(state) {
   };
 
   this.inputData[state.getCity()].forEach(function(d,i){
-    // todo: remove moment here (prep in python instead?)
-    self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
+    self.pathData[+d.hour][d.day - 1] = d[state.getMetric()] / 10;
   })
 
 }

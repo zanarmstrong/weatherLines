@@ -18,7 +18,7 @@ view.prototype.setView = function(state, data, filteredData) {
 
   this.voronoi = d3.geom.voronoi()
              		.x(function(d) {
-              			return state.getScales().xTime(moment(d.day));
+              			return state.getScales().xTime(d.day);
             		})
             		.y(function(d) {
               			return state.getScales().y(d[state.getMetric()] / 10);
@@ -92,7 +92,7 @@ view.prototype.drawVoronoi = function(data, state) {
 	var self = this;
 	// define mouseover and mouseout functions
 	function vMouseover(d) {
-  		var xpos = state.getScales().xTime(moment(d.day));
+  		var xpos = state.getScales().xTime(d.day);
   		var ypos = state.getScales().y(d[state.getMetric()] / 10)
   		var dot = svg.select(".dot").classed('hidden', false);
 
@@ -156,8 +156,13 @@ view.prototype.updateTitle = function(state) {
 }
 // ----- AXIS --------
 view.prototype.drawAxis = function(state) {
+  function momentformat(k) {
+    return moment().dayOfYear(k).format("MMM")
+  }
+
   var xAxis = d3.svg.axis()
-    .tickFormat(d3.time.format("%b"))
+    .tickFormat(momentformat)
+    .tickValues([0, 31, 59, 90, 120, 151, 181, 212, 243, 273,304,334])
     .scale(state.getScales().xTime)
     .orient('bottom');
 
@@ -291,7 +296,7 @@ view.prototype.setCrosshairs = function(xpos, ypos, d) {
   // show text for crosshairs
   d3.select(".crosshairs").select('.xText').text((d[cState.getMetric()]/10) + cState.getYText()).attr("y", ypos - 10);
   d3.select(".crosshairs").select('.zText').text(formatHours(d.hour)).attr("y", ypos - 10).attr("x", xpos + 8);
-  d3.select(".crosshairs").select('.yText').text(moment(d.day).format("MMM DD")).attr("x", xpos + 8);
+  d3.select(".crosshairs").select('.yText').text(moment().dayOfYear(d.day).format("MMM DD")).attr("x", xpos + 8);
 }
 
 // ----- LEGEND -----
@@ -474,4 +479,15 @@ function formatHours(num) {
   } else {
     return (num - 12) + "pm";
   }
+}
+
+function dayToMonth(day) {
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec"];
+  var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+  var i = 0;
+  while(day > 0){
+    day = day - daysInMonth[i];
+    i++
+  }
+  return months[i-1]
 }

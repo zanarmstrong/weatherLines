@@ -14,7 +14,7 @@ function state(city, metric, yDomain, dimensions, legendRectHeight) {
 		// color for hours 0-23
 		color: d3.scale.linear().domain([0, 6, 12, 18, 23]).range(["#0A4D94", "#87B5E6", "#FFC639", "#9F8DE9", "#2C109D"]),
 		// x axis formatted for tick marks
-		xTime: d3.time.scale().domain([moment("2010-01-01"), moment("2010-12-31")]).range([0, dimensions.width]),
+		xTime: d3.scale.linear().domain([0, 365]).range([0, dimensions.width]),
 		// for hour legend on right
 		legendY: d3.scale.linear().domain([0, 23]).range([dimensions.height / 2 + legendRectHeight * 12 + 30, dimensions.height / 2 - legendRectHeight * 12 + 30])
 	};
