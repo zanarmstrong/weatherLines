@@ -19,15 +19,17 @@ dataObj.prototype.updateData = function(data, state) {
 
 dataObj.prototype.updateState = function(state) {
   self = this;
+  city = state.getCity();
+  metric = state.getMetric();
 
-  if(this.pathData[state.getCity()][state.getMetric()].length == 0){
-    console.log("here")
+
+  if(this.pathData[city][metric].length == 0){
     for (var i = 0; i < 24; i++) {
-      this.pathData[state.getCity()][state.getMetric()][i] = [];
+      this.pathData[city][metric][i] = [];
     };
   }
-  this.inputData[state.getCity()].forEach(function(d,i){
-    self.pathData[state.getCity()][state.getMetric()][+d.hour][d.day - 1] = d[state.getMetric()] / 10;
+  this.inputData[city].forEach(function(d,i){
+    self.pathData[city][metric][+d.hour][d.day - 1] = d[metric] / 10;
   })
 }
 
