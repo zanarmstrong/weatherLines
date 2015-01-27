@@ -1,7 +1,6 @@
 "use strict";
 
 // Data location
-var dataFile = "moreCities.csv";
 
 // STANDARD VARIABLES
 var margin = {
@@ -24,7 +23,7 @@ var cState = new state('SAN FRANCISCO',
                        {normalTemperature: [-5,105], heatIndex: [-5,105], windChill: [-5,105], cloudCover: [0,100], aveWindSpeed: [0,25]},
                        {width: width, height: height},
                        legendRectHeight);
-
+var dataFile = 'dataMunging/' + cState.getCity() + '.csv';
 // initialize data
 var data = new dataObj();
 
@@ -66,8 +65,15 @@ d3.csv(dataFile, function(error, inputData) {
 // update selected city
 function updateCity(city) {
     cState.setCity(city);
-    updateCities(city);
-    updateDataAndView();
+    dataFile = 'dataMunging/' + cState.getCity() + '.csv'
+    d3.csv(dataFile, function(error, inputData) {
+      if (error) return console.error(error);
+      // still can consolodate this
+      data.updateData(inputData, cState);
+      updateCities(city);
+      updateDataAndView();
+    }
+    )
 }
 
 // update data and view

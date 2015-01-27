@@ -112,6 +112,34 @@ updateCities = function(city) {
 // CITIES TO MAP, AND LOCATIONS
 // use city lookup tool to get other cities http://bl.ocks.org/zanarmstrong/raw/b7381e04dcded29b2b6f/
 
+var citiesList = ["ATLANTA",
+"DENVER",
+"AUSTIN",
+"CHARLOTTE",
+"CHICAGO",
+"COLUMBUS",
+"DALLAS",
+"DETROIT",
+"EL PASO",
+"FARGO",
+"GREAT FALLS",
+"HOUSTON",
+"INDIANAPOLIS",
+"JACKSONVILLE",
+"LAS VEGAS",
+"LOS ANGELES",
+"MEMPHIS",
+"MIAMI",
+"MINNEAPOLIS",
+"NEW YORK",
+"PHILADELPHIA",
+"PHOENIX",
+"PORTLAND",
+"SAN ANTONIO",
+"SAN DIEGO",
+"SAN FRANCISCO",
+"SEATTLE"]
+
 // city list
 var citiesData = [
   {

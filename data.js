@@ -17,7 +17,7 @@ dataObj.prototype.updateData = function(data, state) {
   this.filteredData = this.inputData
                           .filter(function(d,i) {
                               if (d.city == state.getCity()) {
-                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()];
+                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
                                 return d;
                           }});
 }
@@ -32,7 +32,7 @@ dataObj.prototype.updateState = function(state) {
   this.filteredData = this.inputData
                           .filter(function(d,i) {
                               if (d.city == state.getCity()) {
-                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()];
+                                self.pathData[+d.hour][moment(d.day).dayOfYear() - 1] = d[state.getMetric()] / 10;
                                 return d;
                           }});
 }

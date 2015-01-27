@@ -21,7 +21,7 @@ view.prototype.setView = function(state, data, filteredData) {
               			return state.getScales().xTime(moment(d.day));
             		})
             		.y(function(d) {
-              			return state.getScales().y(d[state.getMetric()]);
+              			return state.getScales().y(d[state.getMetric()] / 10);
             		})
             		.clipExtent([[0, 0],[state.dimensions.width, state.dimensions.height]]);
 
@@ -94,7 +94,7 @@ view.prototype.drawVoronoi = function(data, state) {
 	// define mouseover and mouseout functions
 	function vMouseover(d) {
   		var xpos = state.getScales().xTime(moment(d.day));
-  		var ypos = state.getScales().y(d[state.getMetric()])
+  		var ypos = state.getScales().y(d[state.getMetric()] / 10)
   		var dot = svg.select(".dot")
     		.classed('hidden', false);
 
