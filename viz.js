@@ -293,7 +293,7 @@ view.prototype.setCrosshairs = function(xpos, ypos, d) {
   // show text for crosshairs
   d3.select(".crosshairs").select('.xText').text((d[cState.getMetric()]/10) + cState.getYText()).attr("y", ypos - 10);
   d3.select(".crosshairs").select('.zText').text(formatHours(d.hour)).attr("y", ypos - 10).attr("x", xpos + 8);
-  d3.select(".crosshairs").select('.yText').text(moment().dayOfYear(d.day).format("MMM DD")).attr("x", xpos + 8);
+  d3.select(".crosshairs").select('.yText').text(dayToMonthDay(d.day)).attr("x", xpos + 8);
 }
 
 // ----- LEGEND -----
@@ -457,7 +457,7 @@ view.prototype.resetClock = function() {
 function definePathAndDatum(selection){
     selection.attr("d", function(d) {
       if(typeof(d) != 'undefined'){
-		return "M" + d.join("L") + "Z"};
+		     return "M" + d.join("L") + "Z"};
     })
     .datum(function(d) {
     	if(typeof(d) != 'undefined'){
@@ -487,4 +487,17 @@ function dayToMonth(day) {
     i++
   }
   return months[i-1]
+}
+
+
+function dayToMonthDay(day) {
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec"];
+  var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+  var i = 0;
+  while(day > 0){
+    day = day - daysInMonth[i];
+    i++
+  }
+  day = day + daysInMonth[i-1]
+  return months[i-1] + " " + day
 }
