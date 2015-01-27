@@ -86,7 +86,7 @@ state.prototype.getYTextAxis = function(){
 		return "Typical Temperature (°F)";
 	} else if (this.metric == "cloudCover"){
 		return "Typical Cloud Cover, as % of sky";
-	} else if (this.metric == "headIndex"){
+	} else if (this.metric == "heatIndex"){
 		return "Apparent Temperature, taking into account humidity (°F)";
 	} else if (this.metric == "windChill"){
 		return "Apparent Temperature, taking into account wind (°F)";
