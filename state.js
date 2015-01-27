@@ -18,7 +18,7 @@ function state(city, metric, yDomain, dimensions, legendRectHeight) {
 		// x axis formatted for tick marks
 		xTime: d3.scale.linear().domain([0, 365]).range([0, dimensions.width]),
 		// for hour legend on right
-		legendY: d3.scale.linear().domain([0, 23]).range([dimensions.height / 2 + legendRectHeight * 12 + 30, dimensions.height / 2 - legendRectHeight * 12 + 30])
+		legendY: d3.scale.linear().domain([0, 23]).range([dimensions.height / 2 + legendRectHeight * 12 + 70, dimensions.height / 2 - legendRectHeight * 12 + 70])
 	};
 };
 

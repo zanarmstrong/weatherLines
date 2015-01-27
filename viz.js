@@ -308,7 +308,7 @@ view.prototype.drawLegend = function(state) {
     .enter()
     .append('rect')
     .attr('class', 'legend')
-    .attr("x", width + margin.right / 2 - 25)
+    .attr("x", width + 50)
     .attr("y", function(d, i) {
       return state.getScales().legendY(i)
     })
@@ -328,7 +328,7 @@ view.prototype.drawLegend = function(state) {
     .data(twentyFourHours)
     .enter()
     .append('text')
-    .attr('x', width + margin.right / 2 + 40)
+    .attr('x', width + 110)
     .attr('y', function(d, i) {
       return state.getScales().legendY(i) + legendRectHeight
     })
