@@ -4,7 +4,7 @@
 
 // STANDARD VARIABLES
 var margin = {
-    top: 120,
+    top: 50,
     right: 300,
     bottom: 60,
     left: 100
@@ -14,26 +14,36 @@ var margin = {
 
 // other variables
 var legendRectHeight = 13,
-    clockPosition = {x: width - 60, y: 60},
-    clockHours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  clockPosition = {
+    x: 100,
+    y: 90
+  },
+  clockHours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 // initialize state
-var cState = new state('SAN FRANCISCO', 
-                       "cloudCover", 
-                       {normalTemperature: [-10,105], heatIndex: [-10,105], windChill: [-10,105], cloudCover: [0,100], aveWindSpeed: [0,25]},
-                       {width: width, height: height},
-                       legendRectHeight);
+var cState = new state('SAN FRANCISCO',
+  "cloudCover", {
+    normalTemperature: [-10, 105],
+    heatIndex: [-10, 105],
+    windChill: [-10, 105],
+    cloudCover: [0, 100],
+    aveWindSpeed: [0, 25]
+  }, {
+    width: width,
+    height: height
+  },
+  legendRectHeight);
 
 
-if(window.location.hash.split("&").length != 0){
+if (window.location.hash.split("&").length != 0) {
   var windowState = window.location.hash.split("&");
-  for(var i = 0; i < windowState.length; i++){
-    var k = windowState[i].replace('#','').split('=');
-    if(k[0] == "city"){
+  for (var i = 0; i < windowState.length; i++) {
+    var k = windowState[i].replace('#', '').split('=');
+    if (k[0] == "city") {
       cState.setCity(k[1]);
-    } else if (k[0] == "metric"){
+    } else if (k[0] == "metric") {
       cState.setMetric(k[1]);
-    } 
+    }
   }
 }
 
@@ -78,16 +88,15 @@ d3.csv(dataFile, function(error, inputData) {
 // ----- helper functions ----- // 
 // update selected city
 function updateCity(city) {
-    cState.setCity(city);
-    dataFile = 'dataMunging/' + city + '.csv';
-    d3.csv(dataFile, function(error, inputData) {
-      if (error) return console.error(error);
-      // still can consolodate this
-      updateCities(city);
-      data.updateData(inputData, cState);
-      updateDataAndView();
-    }
-    )
+  cState.setCity(city);
+  dataFile = 'dataMunging/' + city + '.csv';
+  d3.csv(dataFile, function(error, inputData) {
+    if (error) return console.error(error);
+    // still can consolodate this
+    updateCities(city);
+    data.updateData(inputData, cState);
+    updateDataAndView();
+  })
 }
 
 // update data and view

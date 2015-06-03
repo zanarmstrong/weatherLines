@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="weatherHourly.css">
 </head>
 <body>
-  	<select id="metric" name="Select Metric:">
+  <select id="metric" name="Select Metric:">
 		<option value="cloudCover" selected>Percent Cloudy</option>
     <option value="normalTemperature">Temperature</option>
     <option value="heatIndex">Temperature with Heat Index</option>
@@ -12,12 +12,10 @@
     <option value="aveWindSpeed">Ave Wind Speed</option>
 	</select>
   <p id="citySelection"></p>
-	<div id="instructions">
-		<p><span id="info">This graph shows typical weather, based on the last 30 years of weather. Each line represents a different hour of the day. Click on a line or on the legend to highlight a particular hour.  Click on the map to choose a different city. Data Source: <a href="https://gis.ncdc.noaa.gov/geoportal/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00824">NOAA</a></span></p>
-	</div>
-	<section id="weatherLines">
-		<p></p>
-	</section>
+  <section id="weatherLines">
+  <p></p>
+  </section>
+  <p><span id="datasource">Data is based on the last 30 years of weather data, and comes from <a href="https://gis.ncdc.noaa.gov/geoportal/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00824">NOAA</a></span></p>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
